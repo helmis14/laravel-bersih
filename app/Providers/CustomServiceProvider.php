@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\View\Components\Button;
 use Illuminate\Support\ServiceProvider;
-
-
+use App\View\Components\Button;
 class CustomServiceProvider extends ServiceProvider
 {
     /**

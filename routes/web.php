@@ -47,3 +47,16 @@ Route::get('/', function () {
 Route::get('/', function () {
     return view('tryblade.child');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/menu', function () {
+    return view('home');
+});
+Route::get('profile', function(){
+	// Hanya pengguna yang telah terotentikasi yang dalam mengakses rute ini
+})->middleware('auth');
+Route::get('admin/home', [App\Http\Controllers\AdminController::class, 'index'])
+		->name('admin.home')
+		->middleware('is_admin');
