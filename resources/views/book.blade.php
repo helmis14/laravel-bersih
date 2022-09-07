@@ -13,6 +13,7 @@
 		<div class="card-body">
             <!-- Button Tambah Data -->
             <button class="btn btn-primary" data-toggle="modal" data-target="#tambahBukuModal"><i class="fa fa-plus"></i> Tambah Data</button>
+            <a href="{{ route('admin.print.books') }}" target="_blank" class="btn btn-secondary"><i class="fa fa-print"></i> Cetak PDF</a>
 	        <hr/>
 
             <table id="table-data" class="table table-bordered">
@@ -46,7 +47,7 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" id="btn-edit-buku" class="btn btn-success" data-toggle="modal" data-target="#editBukuModal" data-id="{{ $book->id }}">Edit</button>
-                                <button type="button" class="btn btn-danger" onclick="deleteConfirmation('{{$book->id}}', '{{$book->judul}}' )">Hapus</button>			
+                                <button type="button" class="btn btn-danger" onclick="deleteConfirmation('{{$book->id}}', '{{$book->judul}}' )">Hapus</button>
                             </div>
                         </td>
                     </tr>
@@ -143,7 +144,7 @@
                                 <input type="file" class="form-control" name="cover" id="edit-cover"/>
                             </div>
                         </div>
-                    </div>   
+                    </div>
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="id" id="edit-id"/>
@@ -163,12 +164,12 @@
 
         //EDIT
         $(function(){
-            
+
             $(document).on('click', '#btn-edit-buku', function(){
                 let id = $(this).data('id');
 
                 $('#image-area').empty();
-                
+
                 $.ajax({
                     type: "get",
                     url: "{{url('/admin/ajaxadmin/dataBuku')}}/"+id,
@@ -183,7 +184,7 @@
 
                         if (res.cover !== null) {
                             $('#image-area').append(
-                                "<img src='"+baseurl+"/storage/cover_buku/"+res.cover+"' width='200px'/>" 
+                                "<img src='"+baseurl+"/storage/cover_buku/"+res.cover+"' width='200px'/>"
                             );
                         } else {
                             $('#image-area').append('[Gambar tidak tersedia]');
@@ -200,7 +201,7 @@
                 title: "Hapus?",
                 type: 'warning',
                 text: "Apakah anda yakin akan menghapus data buku dengan judul " + judul+"?!",
-                
+
                 showCancelButton: !0,
                 confirmButtonText: "Ya, lakukan!",
                 cancelButtonText: "Tidak, batalkan!",

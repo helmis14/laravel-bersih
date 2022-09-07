@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -50,10 +51,11 @@ class AdminController extends Controller
         if ($req->hasFile('cover')) {
             $extension = $req->file('cover')->extension();
 
-            $filename = 'cover_buku_'.time().'.'.$extension;
+            $filename = 'cover_buku_' . time() . '.' . $extension;
 
             $req->file('cover')->storeAs(
-                'public/cover_buku', $filename
+                'public/cover_buku',
+                $filename
             );
 
             $book->cover = $filename;
@@ -98,13 +100,14 @@ class AdminController extends Controller
         if ($req->hasFile('cover')) {
             $extension = $req->file('cover')->extension();
 
-            $filename = 'cover_buku_'.time().'.'.$extension;
+            $filename = 'cover_buku_' . time() . '.' . $extension;
 
             $req->file('cover')->storeAs(
-                'public/cover_buku', $filename
+                'public/cover_buku',
+                $filename
             );
 
-            Storage::delete('public/cover_buku/'.$req->get('old_cover'));
+            Storage::delete('public/cover_buku/' . $req->get('old_cover'));
 
             $book->cover = $filename;
         }
@@ -124,17 +127,24 @@ class AdminController extends Controller
     {
         $book = Book::find($id);
 
-        Storage::delete('public/cover_buku/'.$book->cover);
+        Storage::delete('public/cover_buku/' . $book->cover);
 
         $book->delete();
 
         $success = true;
         $message = "Data buku berhasil dihapus";
-        
+
         return response()->json([
             'success' => $success,
             'message' => $message,
         ]);
     }
 
+    public function print_books()
+    {
+        $books = Book::all();
+
+        $pdf = PDF::loadview('print_books', ['books' => $books]);
+        return $pdf->download('data_buku.pdf');
+    }
 }
