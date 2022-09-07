@@ -51,12 +51,38 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/menu', function () {
     return view('home');
 });
+
 Route::get('profile', function(){
 	// Hanya pengguna yang telah terotentikasi yang dalam mengakses rute ini
 })->middleware('auth');
+
 Route::get('admin/home', [App\Http\Controllers\AdminController::class, 'index'])
 		->name('admin.home')
 		->middleware('is_admin');
+
+// Pengelolaan Buku
+
+// Show Data
+Route::get('admin/books', [App\Http\Controllers\AdminController::class, 'books'])
+        ->name('admin.books')
+        ->middleware('is_admin');
+
+// Add Data
+Route::post('admin/books', [App\Http\Controllers\AdminController::class, 'submit_book'])
+	    ->name('admin.book.submit')
+	    ->middleware('is_admin');
+
+// Update Data
+Route::patch('admin/books/update', [App\Http\Controllers\AdminController::class, 'update_book'])
+        ->name('admin.book.update')
+        ->middleware('is_admin');
+
+Route::get('admin/ajaxadmin/dataBuku/{id}', [App\Http\Controllers\AdminController::class, 'getDataBuku']);
+
+Route::post('admin/books/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete_book'])
+        ->name('admin.book.delete')
+        ->middleware('is_admin');

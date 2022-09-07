@@ -5,17 +5,17 @@ use App\Models\Role;
 
 use Illuminate\Database\Seeder;
 
-class CreateUsersSeeder extends Seeder
+class CreateRolesSeeder extends Seeder
 {
     public function run()
     {
         $roles = [
             [
-                id' => 1,
+                'id' => 1,
                 'name' => 'Admin',
             ],
             [
-                id' => 2,
+                'id' => 2,
                 'name' => 'User',
             ]
         ];

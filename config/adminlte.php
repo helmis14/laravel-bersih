@@ -290,6 +290,13 @@ return [
     */
 
     'menu' => [
+    [
+        'text' => 'Buku',
+        'url'  => 'admin/books',
+        'icon' => 'fas fa-fw fa-book',
+        'can'  => 'isAdmin',
+    ],
+
         // Navbar items:
         'MAIN NAVIGATION',
     [
@@ -306,12 +313,13 @@ return [
     [
         'header' => 'ACCOUNT SETTINGS',
     ],
-    [
-        'text'  => 'Profile',
-        'route' => 'admin.profile',
-        'icon'  => 'fas fa-fw fa-user',
-        'can'  => 'isAdmin',
-    ],
+    // Dimatiin dulu guys ini gk bisa jalan :)
+    // [
+    //     'text'  => 'Profile',
+    //     'route' => 'admin.profile',
+    //     'icon'  => 'fas fa-fw fa-user',
+    //     'can'  => 'isAdmin',
+    // ],
     [
         'text'  => 'Change Password',
         'route' => 'admin.password',
@@ -330,6 +338,7 @@ return [
         ],
 
         // Sidebar items:
+        
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
@@ -494,7 +503,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
