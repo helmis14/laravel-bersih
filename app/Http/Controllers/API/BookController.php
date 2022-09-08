@@ -69,19 +69,20 @@ class BookController extends Controller
 
     public function update(Request $req, $id)
     {
-        $book = Book::find($id);
+        // $book = Book::find($id);
 
         $validated = $req->validate([
             'judul' => 'required|max:255',
             'penulis' => 'required',
             'tahun' => 'required',
-            'penerbit' => 'required'
+            'penerbit' => 'required',
+            'cover' => 'image|file|max:2048'
         ]);
 
-        $book->judul = $req->get('judul');
-        $book->penulis = $req->get('penulis');
-        $book->tahun = $req->get('tahun');
-        $book->penerbit = $req->get('penerbit');
+        // $book->judul = $req->get('judul');
+        // $book->penulis = $req->get('penulis');
+        // $book->tahun = $req->get('tahun');
+        // $book->penerbit = $req->get('penerbit');
 
         if ($req->hasFile('cover')) {
             $extension = $req->file('cover')->extension();
@@ -93,16 +94,22 @@ class BookController extends Controller
                 $filename
             );
 
-            Storage::delete('public/cover_buku/' . $book->cover);
+            // Storage::delete('public/cover_buku/' . $book->cover);
 
-            $book->cover = $filename;
+            // $book->cover = $filename;
+
+            $validated['cover'] = $filename;
+
+            $book = Book::find($id);
+            Storage::delete('public/cover_buku/' . $book->cover);
+            $book->update($validated);
         }
 
-        $book->save();
+        // $book->save();
 
         return response()->json([
             'message'   => 'buku berhasil diubah',
-            'book'      => $book,
+            'book'      => Book::where('id', $id),
         ], 200);
     }
 
