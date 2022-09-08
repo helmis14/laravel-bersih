@@ -31,14 +31,15 @@ class BookController extends Controller
             'judul' => 'required|max:255',
             'penulis' => 'required',
             'tahun' => 'required',
-            'penerbit' => 'required'
+            'penerbit' => 'required',
+            'cover' => 'image|file|max:2048'
         ]);
 
-        $book = new Book;
-        $book->judul = $req->get('judul');
-        $book->penulis = $req->get('penulis');
-        $book->tahun = $req->get('tahun');
-        $book->penerbit = $req->get('penerbit');
+        // $book = new Book;
+        // $book->judul = $req->get('judul');
+        // $book->penulis = $req->get('penulis');
+        // $book->tahun = $req->get('tahun');
+        // $book->penerbit = $req->get('penerbit');
 
         if ($req->hasFile('cover')) {
             $extension = $req->file('cover')->extension();
@@ -50,14 +51,19 @@ class BookController extends Controller
                 $filename
             );
 
-            $book->cover = $filename;
+            // $book->cover = $filename;
+
+            $validated['cover'] = $filename;
         }
 
-        $book->save();
+
+        // $book->save();
+
+        Book::create($validated);
 
         return response()->json([
             'message'   => 'buku berhasil ditambahkan',
-            'book'      => $book,
+            'book'      => Book::get()->last(),
         ], 200);
     }
 
