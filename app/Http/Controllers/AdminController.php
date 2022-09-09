@@ -36,20 +36,19 @@ class AdminController extends Controller
     //TAMBAH
     public function submit_book(Request $req)
     {
-        $validate = $req->validate([
+        $validated = $req->validate([
             'judul' => 'required|max:255',
-            'penulis' => 'required',
+            'penulis' => '',
             'tahun' => 'required',
             'penerbit' => 'required',
-
+            'cover' => 'image|file|max:2048'
         ]);
 
-        $book = new Book;
-
-        $book->judul = $req->get('judul');
-        $book->penulis = $req->get('penulis');
-        $book->tahun = $req->get('tahun');
-        $book->penerbit = $req->get('penerbit');
+        // $book = new Book;
+        // $book->judul = $req->get('judul');
+        // $book->penulis = $req->get('penulis');
+        // $book->tahun = $req->get('tahun');
+        // $book->penerbit = $req->get('penerbit');
 
         if ($req->hasFile('cover')) {
             $extension = $req->file('cover')->extension();
@@ -61,10 +60,15 @@ class AdminController extends Controller
                 $filename
             );
 
-            $book->cover = $filename;
+            // $book->cover = $filename;
+
+            $validated['cover'] = $filename;
         }
 
-        $book->save();
+
+        // $book->save();
+
+        Book::create($validated);
 
         $notification = array(
             'message' => 'Data buku berhasil ditambahkan',

@@ -84,7 +84,7 @@ Route::patch('admin/books/update', [App\Http\Controllers\AdminController::class,
 
 Route::get('admin/ajaxadmin/dataBuku/{id}', [App\Http\Controllers\AdminController::class, 'getDataBuku']);
 
-Route::delete('admin/books/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete_book'])
+Route::post('admin/books/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete_book'])
     ->name('admin.book.delete')
     ->middleware('is_admin');
 

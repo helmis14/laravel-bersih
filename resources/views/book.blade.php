@@ -256,7 +256,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: "{{ url('koordinator/tugas_akhir/all/delete') }}/" + npm,
+                        url: "books/delete/" + npm,
                         data: {
                             _token: CSRF_TOKEN
                         },

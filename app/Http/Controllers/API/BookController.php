@@ -109,12 +109,14 @@ class BookController extends Controller
 
         return response()->json([
             'message'   => 'buku berhasil diubah',
-            'book'      => Book::where('id', $id),
+            'book'      => $book,
         ], 200);
     }
 
     public function delete($id)
     {
+
+        // dd($id);
         $book = Book::find($id);
 
         Storage::delete('public/cover_buku/' . $book->cover);
